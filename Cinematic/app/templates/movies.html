@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <!--Logo Container-->
+    <div class="logoContainer">
+		<h1>Cinematic</h1>
+	</div> <!--End logo container-->
+    <div class="navbar">
+        <a class="active" href="{{ url_for('movies') }}"><i class="fa fa-fw fa-bookmark"></i> Movies</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}"><i class="fa fa-fw fa-users"></i> Login</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}"><i class="fa fa-fw fa-users"></i> Logout</a>
+        {% endif %}
+        <a href="{{ url_for('register') }}"><i class="fa fa-fw fa-sign-in"></i> Register</a>
+        <a href="{{ url_for('checkout') }}"><i class="fa fa-fw fa-cart-plus"></i> Checkout</a>
+
+
+        <!--Search bar-->
+         <div class="search-container">
+             <form action="{{ url_for('search') }}" method="POST">
+                <input type="text" id="searchBar" name="search" placeholder="Search...">
+                <button type="submit"><i class="fa fa-search"></i></button>
+             </form>
+          </div>
+    </div> <!--End nav bar -->
+
+<!--    	<h2>Movies</h2>-->
+<!--    <div id="myBtnContainer">-->
+<!--      <button class="btn active" onclick="filterSelection('all')"> Show all</button>-->
+<!--      <button class="btn" onclick="filterSelection('Fantasy')"> Fantasy</button>-->
+<!--      <button class="btn" onclick="filterSelection('Horror')"> Horror</button>-->
+<!--      <button class="btn" onclick="filterSelection('Action')"> Action</button>-->
+<!--    </div>-->
+    <div id="myBtnContainer">
+        <a href="{{ url_for('movies') }}"><button class="btn"> Show all</button></a>
+        <a href="{{ url_for('action') }}"><button class="btn"> Action</button></a>
+        <a href="{{ url_for('adventure') }}"><button class="btn"> Adventure</button></a>
+        <a href="{{ url_for('animation') }}"><button class="btn"> Animation</button></a>
+        <a href="{{ url_for('comedy') }}"><button class="btn"> Comedy</button></a>
+        <a href="{{ url_for('crime') }}"><button class="btn"> Crime</button></a>
+        <a href="{{ url_for('documentary') }}"><button class="btn"> Documentary</button></a>
+        <a href="{{ url_for('drama') }}"><button class="btn"> Drama</button></a>
+        <a href="{{ url_for('family') }}"><button class="btn"> Family</button></a>
+        <a href="{{ url_for('fantasy') }}"><button class="btn"> Fantasy</button></a>
+        <a href="{{ url_for('history') }}"><button class="btn"> History</button></a>
+        <a href="{{ url_for('horror') }}"><button class="btn"> Horror</button></a>
+        <a href="{{ url_for('music') }}"><button class="btn"> Music</button></a>
+        <a href="{{ url_for('mystery') }}"><button class="btn"> Mystery</button></a>
+        <a href="{{ url_for('romance') }}"><button class="btn"> Romance</button></a>
+        <a href="{{ url_for('scifi') }}"><button class="btn"> Sci-Fi</button></a>
+        <a href="{{ url_for('thriller') }}"><button class="btn"> Thriller</button></a>
+        <a href="{{ url_for('war') }}"><button class="btn"> War</button></a>
+        <a href="{{ url_for('western') }}"><button class="btn"> Western</button></a>
+
+    </div>
+
+    <!-- Portfolio Gallery Grid -->
+    {% if title == "Documentary" %}
+    <h2>Documentaries</h2>
+    {% elif title != "" %}
+    <h2>{{ title }} Movies</h2>
+    {% endif %}
+    {% if query != "" %}
+    <p style="text-align:left">Search results for '{{ query }}'</p>
+    {% endif %}
+    <div class="row">
+        {% for movie in movies.movies %}
+        <div class="column {{ movie.genres }}">
+            <div class="content">
+                <a href="http://127.0.0.1:3001/movies/{{ movie.title }}"><img style="box-shadow: 5px 5px 2px grey;" src="{{ movie.poster_path }}" alt="{{ movie.title }}" style="width:100%"></a>
+                <br/>
+                <br/>
+                <p>Rent: {{ movie.price }}</p>
+                <form action="{{ url_for('add_to_cart') }}", method="POST">
+                    <input type="hidden" id="addToCart" name="addToCart" value="{{ movie.title }}">
+                    <button type="submit" id="rentButton" class="rentBtn rent">Add to cart</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+    <!-- END GRID -->
+    </div>
+
+    <script type="text/javascript" src="../static/js/menuGallery.js"></script>
+
+
+
+{% endblock %}
+
+

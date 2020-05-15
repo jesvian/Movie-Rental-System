@@ -1,0 +1,30 @@
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Cinematic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/stylesheets/navbar.css" rel="stylesheet" type="text/css">
+    <link href="../static/stylesheets/reset.css" rel="stylesheet" type="text/css">
+    <link href="../static/stylesheets/loginStylesheet.css" rel="stylesheet" type="text/css">
+<!--    <link href="../static/stylesheets/cards.css" rel="stylesheet" type="text/css">-->
+    <link href="../static/stylesheets/newGallery.css" rel="stylesheet" type="text/css">
+</head>
+
+{% extends 'bootstrap/base.html' %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}

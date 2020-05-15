@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <!--Logo Container-->
+    <div class="logoContainer">
+		<h1>Cinematic</h1>
+	</div> <!--End logo container-->
+    <div class="navbar">
+        <a href="{{ url_for('movies') }}"><i class="fa fa-fw fa-bookmark"></i> Movies</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}"><i class="fa fa-fw fa-users"></i> Login</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}"><i class="fa fa-fw fa-users"></i> Logout</a>
+        {% endif %}
+        <a href="{{ url_for('register') }}"><i class="fa fa-fw fa-sign-in"></i> Register</a>
+        <a class="active" href="{{ url_for('checkout') }}"><i class="fa fa-fw fa-cart-plus"></i> Checkout</a>
+
+
+        <!--Search bar-->
+         <div class="search-container">
+             <form action="{{ url_for('search') }}" method="POST">
+                <input type="text" id="searchBar" name="search" placeholder="Search...">
+                <button type="submit"><i class="fa fa-search"></i></button>
+             </form>
+          </div>
+    </div> <!--End nav bar -->
+
+    <h1 style="text-align:center">Hello, {{ user }}</h1>
+    <br/>
+    <br/>
+    {% if cart_length == 0 %}
+    <h3>There are no movies in your cart!</h3>
+    <a href="{{ url_for('movies') }}"><p style="text-align: left">Go checkout some movies!</p></a>
+    {% else %}
+<!--    <p>{{ cart }}</p>-->
+    <table style="width:100%">
+    {% for item in cart %}
+        <tr>
+            <td>Title: {{ item[0] }}</td>
+            <td>Movie ID: {{ item[1] }}</td>
+            <td>Cost: {{ item[2] }}</td>
+            <td>
+                <form action="{{ url_for('remove_item') }}" method="POST">
+                    <input type="hidden" id="movie_id" name="movie_id" value="{{ item[1] }}">
+                    <button type="submit">Remove Item</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Total cost: {{ cart_length * 4.99 }}</td>
+            <td>
+                <form action="{{ url_for('purchase') }}">
+                    <input type="hidden" id="purchase" name="purchase">
+                    <button type="submit">Purchase</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    {% endif %}
+
+{% endblock %}
