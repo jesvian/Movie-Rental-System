@@ -2,6 +2,11 @@
   
 A movie rental system created as a school project for CSC 445 Software Engineering.  
 This project is powered by python and the Flask framework.  
+
+The backend of Cinematic is written in Python. The Python Flask package is utilized to initialize the app and run an instance on a local web server. Python’s SQLalchemy package is utilized to initialize an instance of a database in order to store the information of users,  payment information, and create a cart.
+Movies are stored as JSON objects and displayed on the movies page.
+The front end of Cinematic is written in Javascript and HTML. The front end creates the graphical interface a user can interact with as well as communicating to the backend.
+
   
 Contributors:  
 **John Funk**  
